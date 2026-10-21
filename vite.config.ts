@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 
-// Served from https://<user>.github.io/nyx/ on GitHub Pages.
+// Served from https://nyx.hoyasumii.dev/ (GitHub Pages custom domain).
 export default defineConfig({
-  base: '/nyx/',
+  base: '/',
   build: {
     target: 'es2022',
   },

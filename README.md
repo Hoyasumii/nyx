@@ -3,7 +3,7 @@
 **Seus slides, em cena.** Solte um PDF ou PPTX e apresente em tela cheia direto do navegador.
 Sem conta, sem upload: o arquivo é lido localmente e nunca sai do computador.
 
-🌙 https://hoyasumii.github.io/nyx/
+🌙 https://nyx.hoyasumii.dev/
 
 ![Nyx](public/og.png)
 
@@ -25,7 +25,7 @@ Animações, vídeos e gráficos nativos do PowerPoint não são reproduzidos; p
 
 ```bash
 npm install
-npm run dev        # servidor local em http://localhost:5173/nyx/
+npm run dev        # servidor local em http://localhost:5173/
 npm test           # testes unitários (vitest)
 npm run build      # typecheck + build de produção em dist/
 ```
@@ -44,5 +44,5 @@ npm run assets                    # ou CHROMIUM_PATH=/caminho/do/chrome npm run 
 O workflow `.github/workflows/deploy.yml` publica no GitHub Pages a cada push na `main`.
 Em **Settings → Pages**, selecione **Source: GitHub Actions**.
 
-O site é servido em `/nyx/` (`base` em `vite.config.ts`). As URLs absolutas de SEO vêm de
-`VITE_SITE_URL` em `.env`; se o domínio mudar, atualize também `public/robots.txt` e `public/sitemap.xml`.
+O site é servido na raiz do domínio `nyx.hoyasumii.dev` (`base` em `vite.config.ts`, domínio em `public/CNAME`). As URLs absolutas de SEO vêm de
+`VITE_SITE_URL` em `.env`; se o domínio mudar, atualize também `public/CNAME`, `public/robots.txt` e `public/sitemap.xml`.
