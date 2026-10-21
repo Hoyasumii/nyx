@@ -1,7 +1,7 @@
 // Renders the Open Graph card and PNG icons from the SVG sources in /public.
 // Usage: npm run assets   (set CHROMIUM_PATH if Playwright's browser isn't installed)
 import { chromium } from 'playwright-core';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 
@@ -20,6 +20,7 @@ await page.screenshot({ path: path.join(publicDir, 'og.png') });
 // Square icons: the favicon mark on a full-bleed background, with breathing
 // room so platforms that mask icons into circles don't clip the crescent.
 const mark = await readFile(path.join(publicDir, 'logo.svg'), 'utf8');
+const favicon = await readFile(path.join(publicDir, 'favicon.svg'), 'utf8');
 const icons = [
   { file: 'favicon-32.png', size: 32, rounded: true },
   { file: 'apple-touch-icon.png', size: 180, rounded: false },
@@ -36,5 +37,35 @@ for (const { file, size, rounded } of icons) {
   await page.screenshot({ path: path.join(publicDir, file), omitBackground: true });
 }
 
+// favicon.ico for browsers that skip the SVG icon (Safari among them): an ICO
+// container holding PNG frames, which every current browser reads.
+const frames = [];
+for (const size of [16, 32, 48]) {
+  await page.setViewportSize({ width: size, height: size });
+  await page.setContent(`<!doctype html><body style="margin:0;background:transparent">
+    <div style="width:${size}px;height:${size}px">${favicon.replace('<svg ', '<svg width="100%" height="100%" ')}</div></body>`);
+  frames.push({ size, png: await page.screenshot({ omitBackground: true }) });
+}
+await writeFile(path.join(publicDir, 'favicon.ico'), toIco(frames));
+
 await browser.close();
 console.log('Rendered og.png and icons into public/.');
+
+function toIco(frames) {
+  const header = Buffer.alloc(6);
+  header.writeUInt16LE(1, 2); // type: icon
+  header.writeUInt16LE(frames.length, 4);
+  let offset = 6 + frames.length * 16;
+  const entries = frames.map(({ size, png }) => {
+    const entry = Buffer.alloc(16);
+    entry.writeUInt8(size % 256, 0);
+    entry.writeUInt8(size % 256, 1);
+    entry.writeUInt16LE(1, 4); // color planes
+    entry.writeUInt16LE(32, 6); // bits per pixel
+    entry.writeUInt32LE(png.length, 8);
+    entry.writeUInt32LE(offset, 12);
+    offset += png.length;
+    return entry;
+  });
+  return Buffer.concat([header, ...entries, ...frames.map((frame) => frame.png)]);
+}
