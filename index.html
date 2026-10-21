@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Nyx — transforme PDF e PPTX em apresentação no navegador</title>
+    <meta
+      name="description"
+      content="Solte um PDF ou PowerPoint (PPTX) e apresente em tela cheia direto do navegador. Sem cadastro, sem upload: o arquivo nunca sai do seu computador."
+    />
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
+    <meta name="theme-color" content="#0d0c0b" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Nyx" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Nyx" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:title" content="Nyx — seus slides, em cena" />
+    <meta
+      property="og:description"
+      content="Solte um PDF ou PPTX e apresente em tela cheia, direto do navegador. Nada é enviado para servidor nenhum."
+    />
+    <meta property="og:image" content="%VITE_SITE_URL%/og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Nyx: seus slides, em cena. Um slide em tela escura iluminado por um pequeno holofote." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nyx — seus slides, em cena" />
+    <meta
+      name="twitter:description"
+      content="Solte um PDF ou PPTX e apresente em tela cheia, direto do navegador."
+    />
+    <meta name="twitter:image" content="%VITE_SITE_URL%/og.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "Nyx",
+            "url": "%VITE_SITE_URL%/",
+            "image": "%VITE_SITE_URL%/og.png",
+            "description": "Transforme arquivos PDF e PPTX em uma apresentação de slides em tela cheia, direto no navegador.",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Any",
+            "inLanguage": "pt-BR",
+            "browserRequirements": "Requires JavaScript",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Meu arquivo é enviado para algum servidor?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Não. O Nyx lê o PDF ou PPTX inteiramente no seu navegador. Nenhum byte do arquivo sai do seu computador."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Quais formatos são aceitos?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "PDF e PowerPoint (.pptx). Arquivos .ppt, Keynote e Google Slides podem ser exportados como PDF ou PPTX antes."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "O PPTX fica idêntico ao PowerPoint?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Textos, imagens, formas, tabelas e fundos são reproduzidos. Animações, vídeos e gráficos nativos não. Para fidelidade total, exporte como PDF."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="site" id="site">
+      <header class="nav">
+        <a class="brand" href="./" aria-label="Nyx, página inicial">
+          <img src="/logo.svg" alt="" width="30" height="30" />
+          <span>nyx</span>
+        </a>
+        <nav aria-label="Seções">
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#atalhos">Atalhos</a>
+          <a href="#perguntas">Perguntas</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="eyebrow">PDF · PPTX <span aria-hidden="true">→</span> apresentação</p>
+            <h1 id="hero-title">Seus slides,<br /><em>em cena.</em></h1>
+            <p class="lede">
+              Solte o arquivo e apresente em tela cheia, direto do navegador. Sem conta, sem upload, sem instalar nada.
+            </p>
+          </div>
+
+          <div class="hero-drop">
+
+          <label class="drop" id="drop" for="file-input">
+            <span class="drop-mark tl" aria-hidden="true"></span>
+            <span class="drop-mark tr" aria-hidden="true"></span>
+            <span class="drop-mark bl" aria-hidden="true"></span>
+            <span class="drop-mark br" aria-hidden="true"></span>
+            <input id="file-input" type="file" accept=".pdf,.pptx,application/pdf,application/vnd.openxmlformats-officedocument.presentationml.presentation" />
+            <span class="drop-idle">
+              <span class="drop-title only-pointer">Solte aqui um <em>PDF</em> ou <em>PPTX</em></span>
+              <span class="drop-title only-touch">Abra um <em>PDF</em> ou <em>PPTX</em></span>
+              <span class="drop-or only-pointer">ou</span>
+              <span class="button button-light">Escolher arquivo</span>
+            </span>
+            <span class="drop-busy" aria-live="polite">
+              <span class="drop-title">Acendendo as luzes<span class="dots"></span></span>
+              <span class="drop-file" id="drop-file"></span>
+            </span>
+            <span class="drop-over">
+              <span class="drop-title">Pode soltar.</span>
+            </span>
+            <span class="drop-foot">
+              <span>Processado localmente · o arquivo não sai do seu computador</span>
+            </span>
+          </label>
+          <p class="drop-error" id="drop-error" role="alert" hidden></p>
+          </div>
+        </section>
+
+        <section class="how" id="como-funciona" aria-labelledby="how-title">
+          <h2 id="how-title" class="section-title">Como funciona</h2>
+          <ol class="steps">
+            <li>
+              <span class="step-n">01</span>
+              <h3>Solte o arquivo</h3>
+              <p>Arraste um PDF ou PPTX para a página, ou escolha pelo seletor. A leitura acontece ali mesmo, no navegador.</p>
+            </li>
+            <li>
+              <span class="step-n">02</span>
+              <h3>Revise os slides</h3>
+              <p>Navegue pela tira de miniaturas ou abra a grade para pular direto para qualquer slide.</p>
+            </li>
+            <li>
+              <span class="step-n">03</span>
+              <h3>Apresente</h3>
+              <p>Tela cheia com um toque. O cursor vira um pequeno holofote que ilumina o que você aponta.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="keys" id="atalhos" aria-labelledby="keys-title">
+          <h2 id="keys-title" class="section-title">Atalhos</h2>
+          <dl class="key-list">
+            <div><dt>Próximo slide</dt><dd><kbd>→</kbd><kbd>Espaço</kbd><kbd>PgDn</kbd></dd></div>
+            <div><dt>Slide anterior</dt><dd><kbd>←</kbd><kbd>PgUp</kbd></dd></div>
+            <div><dt>Primeiro e último</dt><dd><kbd>Home</kbd><kbd>End</kbd></dd></div>
+            <div><dt>Tela cheia</dt><dd><kbd>F</kbd></dd></div>
+            <div><dt>Grade de slides</dt><dd><kbd>G</kbd></dd></div>
+            <div><dt>Escurecer a tela</dt><dd><kbd>B</kbd></dd></div>
+            <div><dt>Sair</dt><dd><kbd>Esc</kbd></dd></div>
+          </dl>
+        </section>
+
+        <section class="faq" id="perguntas" aria-labelledby="faq-title">
+          <h2 id="faq-title" class="section-title">Perguntas</h2>
+          <details>
+            <summary>Meu arquivo é enviado para algum servidor?</summary>
+            <p>Não. O Nyx é um site estático: o PDF ou PPTX é lido inteiramente pelo seu navegador e nenhum byte sai do seu computador. Você pode até desconectar a internet depois que a página carregar.</p>
+          </details>
+          <details>
+            <summary>Quais formatos são aceitos?</summary>
+            <p>PDF e PowerPoint (<code>.pptx</code>). Arquivos <code>.ppt</code> antigos, Keynote e Google Slides podem ser exportados como PDF ou PPTX antes.</p>
+          </details>
+          <details>
+            <summary>O PPTX fica idêntico ao PowerPoint?</summary>
+            <p>Textos, imagens, formas, tabelas e fundos são reproduzidos. Animações, vídeos e gráficos nativos ficam de fora. Se a fidelidade for essencial, exporte como PDF: ele sai pixel a pixel.</p>
+          </details>
+          <details>
+            <summary>Funciona no celular?</summary>
+            <p>Sim. Deslize para os lados para trocar de slide. O holofote aparece só com mouse, já que no toque não existe cursor.</p>
+          </details>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p class="footer-mark" aria-hidden="true">nyx</p>
+        <div class="footer-row">
+          <span>Feito para quem apresenta.</span>
+          <a href="https://github.com/hoyasumii/nyx" rel="noopener">Código no GitHub</a>
+        </div>
+      </footer>
+    </div>
+
+    <div class="viewer" id="viewer" hidden></div>
+    <div class="spotlight" id="spotlight" aria-hidden="true"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

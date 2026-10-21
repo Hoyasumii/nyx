@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: 'Instrument Serif'; src: url('../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2'); }
+  @font-face { font-family: 'Instrument Serif'; font-style: italic; src: url('../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2'); }
+  @font-face { font-family: 'Geist'; font-weight: 100 900; src: url('../../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2'); }
+  @font-face { font-family: 'Geist Mono'; src: url('../../node_modules/@fontsource/geist-mono/files/geist-mono-latin-400-normal.woff2'); }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: #0d0c0b;
+    color: #f3eee4;
+    font-family: 'Geist', sans-serif;
+  }
+  .glow {
+    position: absolute;
+    left: -220px;
+    top: -320px;
+    width: 1100px;
+    height: 900px;
+    background: radial-gradient(closest-side, rgb(255 213 138 / 0.16), rgb(255 213 138 / 0.04) 55%, transparent);
+  }
+  .grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.09;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.4 -.2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    z-index: 5;
+  }
+  .brand {
+    position: absolute;
+    left: 72px;
+    top: 60px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 44px;
+    line-height: 1;
+  }
+  .brand img { width: 46px; height: 46px; }
+  .brand span { transform: translateY(-3px); }
+  h1 {
+    position: absolute;
+    left: 68px;
+    top: 196px;
+    margin: 0;
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 128px;
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+  }
+  h1 em {
+    font-style: italic;
+    background: linear-gradient(100deg, #fff1d1 0%, #ffd58a 45%, #e9a34a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-right: 0.08em;
+  }
+  .meta {
+    position: absolute;
+    left: 72px;
+    bottom: 60px;
+    display: flex;
+    gap: 28px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 17px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(243 238 228 / 0.5);
+  }
+  .meta b { font-weight: 400; color: #ffd58a; }
+
+  /* Slide mock: a dark slide on stage, with the spotlight lens lifting a spot. */
+  .slide {
+    position: absolute;
+    left: 640px;
+    top: 150px;
+    width: 640px;
+    height: 360px;
+    border-radius: 6px;
+    background:
+      radial-gradient(120% 90% at 0% 0%, #2a241b 0%, #17140f 55%, #110f0c 100%);
+    box-shadow:
+      0 0 0 1px rgb(243 238 228 / 0.13),
+      0 1px 0 rgb(243 238 228 / 0.1) inset,
+      0 50px 100px -30px rgb(0 0 0 / 0.95);
+    overflow: hidden;
+  }
+  .slide .k {
+    position: absolute;
+    left: 44px;
+    top: 44px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: rgb(243 238 228 / 0.42);
+  }
+  .slide .t {
+    position: absolute;
+    left: 44px;
+    top: 76px;
+    font-family: 'Instrument Serif', serif;
+    font-size: 46px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: rgb(243 238 228 / 0.8);
+  }
+  .bars {
+    position: absolute;
+    left: 44px;
+    bottom: 48px;
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    height: 150px;
+  }
+  .bars i {
+    display: block;
+    width: 38px;
+    border-radius: 3px 3px 0 0;
+    background: rgb(243 238 228 / 0.16);
+  }
+  .bars i.hi { background: linear-gradient(#ffd58a, #b97a2c); opacity: 0.75; }
+  .lens {
+    position: absolute;
+    left: 878px;
+    top: 330px;
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(255 246 224 / 0.22) 0%, rgb(255 246 224 / 0.08) 62%, rgb(255 246 224 / 0) 72%);
+    backdrop-filter: brightness(2.1) saturate(1.2);
+    box-shadow: 0 0 0 1.5px rgb(255 240 210 / 0.45), 0 0 34px 6px rgb(255 213 138 / 0.35);
+    z-index: 4;
+  }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="brand"><img src="../../public/logo.svg" alt="" /><span>nyx</span></div>
+  <h1>Seus slides,<br /><em>em cena.</em></h1>
+  <div class="meta"><span>PDF · PPTX <b>→</b> tela cheia</span><span>· sem upload</span></div>
+  <div class="slide">
+    <div class="k">Q3 · RESULTADOS</div>
+    <div class="t">Crescimento por região</div>
+    <div class="bars">
+      <i style="height: 38%"></i><i style="height: 52%"></i><i style="height: 46%"></i><i class="hi" style="height: 88%"></i><i style="height: 64%"></i><i style="height: 72%"></i><i style="height: 58%"></i>
+    </div>
+  </div>
+  <div class="lens"></div>
+  <div class="grain"></div>
+</body>
+</html>

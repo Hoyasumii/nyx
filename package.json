@@ -1,0 +1,28 @@
+{
+  "name": "nyx",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Turn PDF and PPTX files into a clean, fullscreen presentation right in the browser.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "assets": "node scripts/render-assets.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "^5.3.0",
+    "@fontsource/geist-mono": "^5.3.0",
+    "@fontsource/instrument-serif": "^5.3.0",
+    "jszip": "^3.10.2",
+    "pdfjs-dist": "^6.4.299"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.56.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  }
+}
