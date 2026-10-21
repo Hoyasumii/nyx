@@ -9,7 +9,7 @@ No account, no upload: the file is read locally and never leaves your computer.
 
 ## Tech stack
 
-[![Tech stack](https://skill-icons.alanreisanjo.workers.dev/icons?i=ts,html,css,vite,vitest,playwright,nodejs,ghactions)](https://skill-icons.alanreisanjo.workers.dev)
+[![Tech stack](https://skill-icons.alanreisanjo.workers.dev/icons?i=ts,html,css,vite,vitest,playwright,nodejs,ghactions&tint=ffd58a&bg=dark)](https://skill-icons.alanreisanjo.workers.dev)
 
 Also uses [pdf.js](https://mozilla.github.io/pdf.js/) for PDF rendering and [JSZip](https://stuk.github.io/jszip/) to read PPTX files.
 
