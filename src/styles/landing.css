@@ -69,33 +69,75 @@
   gap: 12px;
 }
 
+/* Segmented toggle: a thumb slides under the active language. `--index` and
+   `--count` come from the build; ui/lang-switch.ts moves the thumb on click. */
 .lang-switch {
-  display: flex;
-  gap: 2px;
-  padding: 3px;
+  --pad: 3px;
+  position: relative;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  padding: var(--pad);
   border-radius: 999px;
+  background: rgb(243 238 228 / 0.03);
   box-shadow: inset 0 0 0 1px rgb(243 238 228 / 0.12);
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.08em;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.lang-switch a,
-.lang-switch span {
-  padding: 5px 9px;
+.lang-thumb {
+  position: absolute;
+  top: var(--pad);
+  bottom: var(--pad);
+  left: var(--pad);
+  width: calc((100% - var(--pad) * 2) / var(--count));
   border-radius: 999px;
+  background: var(--paper);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 0 16px rgb(255 213 138 / 0.18);
+  transform: translateX(calc(var(--index) * 100%));
+  transition: transform 320ms var(--ease-out);
+}
+
+.lang-switch a {
+  position: relative;
+  z-index: 1;
+  min-width: 38px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  text-align: center;
   color: var(--paper-dim);
   text-decoration: none;
-  transition: color 140ms, background-color 140ms;
+  cursor: pointer;
+  -webkit-user-drag: none;
+  transition: color 220ms var(--ease-out);
 }
 
 .lang-switch a:hover {
   color: var(--paper);
 }
 
-.lang-switch [aria-current] {
-  color: var(--paper);
-  background: rgb(243 238 228 / 0.1);
+.lang-switch a:focus-visible {
+  outline: 2px solid var(--lume);
+  outline-offset: 2px;
+}
+
+/* The active label sits on the light thumb, so it flips to ink. */
+.lang-switch a.is-active,
+.lang-switch:not(.is-switching) a[aria-current] {
+  color: var(--ink);
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lang-thumb,
+  .lang-switch a {
+    transition: none;
+  }
 }
 
 @media (max-width: 640px) {

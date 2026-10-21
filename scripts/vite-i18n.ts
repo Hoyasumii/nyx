@@ -98,10 +98,9 @@ function pageValues(key: Locale, siteUrl: string) {
     .join('\n    ');
 
   const languages = all
-    .map(([k, l]) =>
-      k === key
-        ? `<span aria-current="true">${k.toUpperCase()}</span>`
-        : `<a href="${l.path}" hreflang="${l.lang}" lang="${l.lang}" title="${l.name}">${k.toUpperCase()}</a>`,
+    .map(
+      ([k, l]) =>
+        `<a href="${l.path}" hreflang="${l.lang}" lang="${l.lang}" title="${l.name}" draggable="false"${k === key ? ' aria-current="page"' : ''}>${k.toUpperCase()}</a>`,
     )
     .join('');
 
@@ -141,6 +140,8 @@ function pageValues(key: Locale, siteUrl: string) {
     alternates,
     ogLocaleAlternates,
     languages,
+    languageIndex: String(all.findIndex(([k]) => k === key)),
+    languageCount: String(all.length),
     // `<` is escaped so no message can close the script element.
     jsonLd: JSON.stringify(jsonLd, null, 2).replace(/</g, '\\u003c').replace(/\n/g, '\n    '),
   };

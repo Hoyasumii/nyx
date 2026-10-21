@@ -55,7 +55,7 @@
             <a href="#{{ keys.id }}">{{ keys.title }}</a>
             <a href="#{{ faq.id }}">{{ faq.title }}</a>
           </nav>
-          <div class="lang-switch" role="group" aria-label="{{ nav.language }}">{{{ page.languages }}}</div>
+          <div class="lang-switch" id="lang-switch" role="group" aria-label="{{ nav.language }}" style="--index: {{ page.languageIndex }}; --count: {{ page.languageCount }}"><span class="lang-thumb" aria-hidden="true"></span>{{{ page.languages }}}</div>
         </div>
       </header>
 
