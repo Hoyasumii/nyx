@@ -1,61 +1,67 @@
 # Nyx
 
-**Seus slides, em cena.** Solte um PDF ou PPTX e apresente em tela cheia direto do navegador.
-Sem conta, sem upload: o arquivo é lido localmente e nunca sai do computador.
+**Your slides, on stage.** Drop a PDF or PPTX and present it fullscreen right in the browser.
+No account, no upload: the file is read locally and never leaves your computer.
 
-🌙 https://nyx.hoyasumii.dev/ · em inglês: https://nyx.hoyasumii.dev/en/
+🌙 https://nyx.hoyasumii.dev/en/ · in Portuguese: https://nyx.hoyasumii.dev/
 
-![Nyx](public/og.png)
+![Nyx](public/og-en.png)
 
-## Recursos
+## Tech stack
 
-- **PDF** renderizado com [pdf.js](https://mozilla.github.io/pdf.js/), nítido em qualquer resolução.
-- **PPTX** interpretado por um renderizador próprio (`src/deck/pptx`): temas, layouts e masters,
-  textos com herança de estilos, marcadores, formas predefinidas e livres, imagens com recorte,
-  grupos, tabelas (incluindo os estilos nativos do PowerPoint), fundos sólidos, gradientes e imagens,
-  e diagramas SmartArt.
-- **Modo apresentação** em tela cheia: o cursor vira um pequeno holofote que clareia o slide
-  por trás dele, sem esconder o conteúdo.
-- Miniaturas, grade de slides, gestos de toque e atalhos de teclado
-  (`→` `Espaço` `←` `Home` `End` `F` `G` `B` `Esc`).
+[![Tech stack](https://skill-icons.alanreisanjo.workers.dev/icons?i=ts,html,css,vite,vitest,playwright,nodejs,ghactions)](https://skill-icons.alanreisanjo.workers.dev)
 
-Animações, vídeos e gráficos nativos do PowerPoint não são reproduzidos; para fidelidade total, exporte como PDF.
+Also uses [pdf.js](https://mozilla.github.io/pdf.js/) for PDF rendering and [JSZip](https://stuk.github.io/jszip/) to read PPTX files.
 
-## Desenvolvimento
+## Features
+
+- **PDF** rendered with [pdf.js](https://mozilla.github.io/pdf.js/), sharp at any resolution.
+- **PPTX** parsed by a custom renderer (`src/deck/pptx`): themes, layouts and masters,
+  text with style inheritance, bullets, preset and freeform shapes, cropped images,
+  groups, tables (including PowerPoint's built-in table styles), solid, gradient and image backgrounds,
+  and SmartArt diagrams.
+- **Fullscreen presentation mode**: the cursor becomes a small spotlight that lights up the slide
+  behind it without hiding the content.
+- Thumbnails, slide grid, touch gestures and keyboard shortcuts
+  (`→` `Space` `←` `Home` `End` `F` `G` `B` `Esc`).
+
+PowerPoint animations, videos and native charts are not played back; for full fidelity, export to PDF.
+
+## Development
 
 ```bash
 npm install
-npm run dev        # servidor local em http://localhost:5173/
-npm test           # testes unitários (vitest)
-npm run build      # typecheck + build de produção em dist/
+npm run dev        # local server at http://localhost:5173/
+npm test           # unit tests (vitest)
+npm run build      # typecheck + production build into dist/
 ```
 
-### Idiomas
+### Languages
 
-O site existe em português (`/`) e inglês (`/en/`). Os textos ficam em `src/i18n/pt.ts` e `src/i18n/en.ts`
-(tipados por `src/i18n/messages.ts`), e cada idioma é configurado em `src/i18n/locales.ts`.
-O `index.html` é um template único: no build (e no `npm run dev`), o plugin `scripts/vite-i18n.ts` gera
-uma página estática por idioma, com `lang`, metadados, OpenGraph, `hreflang` e JSON-LD próprios.
-Use `{{ chave.caminho }}` para texto escapado e `{{{ chave.caminho }}}` para HTML. No navegador,
-`src/i18n/index.ts` lê o `lang` da página e expõe as mensagens do viewer e dos erros.
+The site is available in Portuguese (`/`) and English (`/en/`). Strings live in `src/i18n/pt.ts` and `src/i18n/en.ts`
+(typed by `src/i18n/messages.ts`), and each locale is configured in `src/i18n/locales.ts`.
+`index.html` is a single template: at build time (and during `npm run dev`), the `scripts/vite-i18n.ts` plugin generates
+one static page per locale, each with its own `lang`, metadata, OpenGraph, `hreflang` and JSON-LD.
+Use `{{ key.path }}` for escaped text and `{{{ key.path }}}` for HTML. In the browser,
+`src/i18n/index.ts` reads the page's `lang` and exposes the viewer and error messages.
 
-Para adicionar um idioma: crie o dicionário, registre-o em `locales.ts`, adicione o card em
-`scripts/render-assets.mjs` e a URL em `public/sitemap.xml`.
+To add a language: create the dictionary, register it in `locales.ts`, add its card to
+`scripts/render-assets.mjs` and its URL to `public/sitemap.xml`.
 
-### Imagem OpenGraph e ícones
+### OpenGraph image and icons
 
-`public/og.png` (português), `public/og-en.png` (inglês) e os ícones PNG são gerados a partir de
-`scripts/og/og.html` e `public/logo.svg`:
+`public/og.png` (Portuguese), `public/og-en.png` (English) and the PNG icons are generated from
+`scripts/og/og.html` and `public/logo.svg`:
 
 ```bash
-npx playwright install chromium   # uma vez
-npm run assets                    # ou CHROMIUM_PATH=/caminho/do/chrome npm run assets
+npx playwright install chromium   # once
+npm run assets                    # or CHROMIUM_PATH=/path/to/chrome npm run assets
 ```
 
-## Deploy
+## Deployment
 
-O workflow `.github/workflows/deploy.yml` publica no GitHub Pages a cada push na `main`.
-Em **Settings → Pages**, selecione **Source: GitHub Actions**.
+The `.github/workflows/deploy.yml` workflow publishes to GitHub Pages on every push to `main`.
+Under **Settings → Pages**, select **Source: GitHub Actions**.
 
-O site é servido na raiz do domínio `nyx.hoyasumii.dev` (`base` em `vite.config.ts`, domínio em `public/CNAME`). As URLs absolutas de SEO vêm de
-`VITE_SITE_URL` em `.env`; se o domínio mudar, atualize também `public/CNAME`, `public/robots.txt` e `public/sitemap.xml`.
+The site is served at the root of the `nyx.hoyasumii.dev` domain (`base` in `vite.config.ts`, domain in `public/CNAME`). Absolute SEO URLs come from
+`VITE_SITE_URL` in `.env`; if the domain changes, also update `public/CNAME`, `public/robots.txt` and `public/sitemap.xml`.
