@@ -1,15 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <radialGradient id="lume" cx="0.3" cy="0.72" r="0.8">
+    <radialGradient id="lume" cx="22" cy="42.8" r="32" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#FFF4DA"/>
       <stop offset="0.55" stop-color="#FFD58A"/>
       <stop offset="1" stop-color="#E9A34A"/>
     </radialGradient>
-    <mask id="eclipse">
-      <rect width="64" height="64" fill="#fff"/>
-      <circle cx="40" cy="25" r="15.5" fill="#000"/>
-    </mask>
   </defs>
-  <circle cx="30" cy="34" r="20" fill="url(#lume)" mask="url(#eclipse)"/>
+  <path d="M29.057 14.022A20 20 0 1 0 49.768 37.034A15.5 15.5 0 0 1 29.057 14.022Z" fill="url(#lume)"/>
   <circle cx="42.5" cy="22.5" r="4" fill="#FFE3AE"/>
 </svg>

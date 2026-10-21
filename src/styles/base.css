@@ -178,9 +178,10 @@ kbd {
 }
 
 /* --- Spotlight cursor --------------------------------------------------------
- * A small lens that replaces the cursor and brightens what's under it. The
- * backdrop filter lifts the slide behind the lens; the faint wash lets it read
- * even over pure black, without ever hiding the content. */
+ * A small lens that replaces the cursor and adapts to what's under it. The
+ * difference blend inverts the ring against the slide, so it stays visible on
+ * light and dark backgrounds alike, and the faint fill tones down bright areas
+ * (and lifts black ones) without ever hiding the content. */
 
 .has-spotlight,
 .has-spotlight * {
@@ -208,12 +209,11 @@ kbd {
   border-radius: 50%;
   pointer-events: none;
   opacity: 0;
-  background: radial-gradient(circle, rgb(255 246 224 / 0.2) 0%, rgb(255 246 224 / 0.08) 62%, rgb(255 246 224 / 0) 72%);
-  -webkit-backdrop-filter: brightness(1.85) saturate(1.15);
-  backdrop-filter: brightness(1.85) saturate(1.15);
+  background: rgb(255 255 255 / 0.16);
   box-shadow:
-    0 0 0 1px rgb(255 240 210 / 0.38),
-    0 0 18px 2px rgb(255 213 138 / 0.28);
+    inset 0 0 0 1.5px rgb(255 255 255 / 0.9),
+    0 0 0 1px rgb(255 255 255 / 0.12);
+  mix-blend-mode: difference;
   transition:
     opacity 160ms var(--ease-out),
     width 160ms var(--ease-out),

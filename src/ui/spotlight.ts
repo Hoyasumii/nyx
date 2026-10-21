@@ -1,7 +1,8 @@
 /**
- * Replaces the mouse cursor with a small lens that brightens whatever is
- * behind it. The lens follows the pointer inside `area`, and steps aside for
- * interactive controls marked with `[data-cursor]` so they keep a real cursor.
+ * Replaces the mouse cursor with a small lens that adapts to whatever is
+ * behind it, so it reads on light and dark slides alike. The lens follows the
+ * pointer inside `area`, and steps aside for interactive controls marked with
+ * `[data-cursor]` so they keep a real cursor.
  */
 export class Spotlight {
   private x = 0;
