@@ -1,4 +1,5 @@
 import type { Deck, Slide } from '../deck/types';
+import { t } from '../i18n';
 import { icons } from './icons';
 import type { Spotlight } from './spotlight';
 
@@ -35,7 +36,7 @@ function lazyThumbs(
     const button = h('button', {
       type: 'button',
       class: className,
-      'aria-label': `Ir para o slide ${i + 1}`,
+      'aria-label': t.viewer.goTo(i + 1),
       'data-index': String(i),
     });
     const frame = h('span', { class: 'thumb-frame' });
@@ -100,7 +101,7 @@ export class Viewer {
     host.className = 'viewer';
 
     const bar = h('header', { class: 'v-bar', 'data-cursor': '' });
-    const back = h('button', { type: 'button', class: 'icon-btn', 'data-action': 'close', title: 'Voltar (Esc)', 'aria-label': 'Fechar apresentação' }, icons.back);
+    const back = h('button', { type: 'button', class: 'icon-btn', 'data-action': 'close', title: t.viewer.back, 'aria-label': t.viewer.close }, icons.back);
     const title = h('div', { class: 'v-title' });
     const kind = h('span', { class: 'v-kind' });
     kind.textContent = deck.kind.toUpperCase();
@@ -110,43 +111,43 @@ export class Viewer {
     this.counter = h('div', { class: 'v-count', 'aria-live': 'polite' });
     const actions = h('div', { class: 'v-actions' });
     actions.append(
-      h('button', { type: 'button', class: 'icon-btn', 'data-action': 'grid', title: 'Grade de slides (G)', 'aria-label': 'Ver todos os slides' }, icons.grid),
-      h('button', { type: 'button', class: 'button button-light', 'data-action': 'present', title: 'Apresentar em tela cheia (F)' }, `${icons.play}<span>Apresentar</span>`),
+      h('button', { type: 'button', class: 'icon-btn', 'data-action': 'grid', title: t.viewer.gridHint, 'aria-label': t.viewer.showAll }, icons.grid),
+      h('button', { type: 'button', class: 'button button-light', 'data-action': 'present', title: t.viewer.presentHint }, `${icons.play}<span>${t.viewer.present}</span>`),
     );
     bar.append(back, title, this.counter, actions);
 
     this.stage = h('div', { class: 'v-stage' });
     this.slot = h('div', { class: 'v-slot' });
     this.stage.append(
-      h('button', { type: 'button', class: 'v-nav is-prev', 'data-cursor': '', 'data-action': 'prev', 'aria-label': 'Slide anterior' }, icons.prev),
+      h('button', { type: 'button', class: 'v-nav is-prev', 'data-cursor': '', 'data-action': 'prev', 'aria-label': t.viewer.prev }, icons.prev),
       this.slot,
-      h('button', { type: 'button', class: 'v-nav is-next', 'data-cursor': '', 'data-action': 'next', 'aria-label': 'Próximo slide' }, icons.next),
+      h('button', { type: 'button', class: 'v-nav is-next', 'data-cursor': '', 'data-action': 'next', 'aria-label': t.viewer.next }, icons.next),
       h('div', { class: 'v-blackout', 'aria-hidden': 'true' }),
     );
 
-    this.strip = h('nav', { class: 'v-strip', 'data-cursor': '', 'aria-label': 'Miniaturas dos slides' });
+    this.strip = h('nav', { class: 'v-strip', 'data-cursor': '', 'aria-label': t.viewer.thumbnails });
     this.stripThumbs = lazyThumbs(this.strip, deck, THUMB_WIDTH, 'thumb', (i) => this.go(i));
     this.strip.append(...this.stripThumbs);
 
     const hud = h('div', { class: 'v-hud', 'data-cursor': '' });
     this.hudCounter = h('span', { class: 'v-hud-count' });
     hud.append(
-      h('button', { type: 'button', class: 'icon-btn', 'data-action': 'prev', 'aria-label': 'Slide anterior' }, icons.prev),
+      h('button', { type: 'button', class: 'icon-btn', 'data-action': 'prev', 'aria-label': t.viewer.prev }, icons.prev),
       this.hudCounter,
-      h('button', { type: 'button', class: 'icon-btn', 'data-action': 'next', 'aria-label': 'Próximo slide' }, icons.next),
+      h('button', { type: 'button', class: 'icon-btn', 'data-action': 'next', 'aria-label': t.viewer.next }, icons.next),
       h('span', { class: 'v-hud-sep', 'aria-hidden': 'true' }),
-      h('button', { type: 'button', class: 'icon-btn', 'data-action': 'grid', 'aria-label': 'Ver todos os slides' }, icons.grid),
-      h('button', { type: 'button', class: 'icon-btn', 'data-action': 'present', 'aria-label': 'Sair da tela cheia' }, icons.shrink),
+      h('button', { type: 'button', class: 'icon-btn', 'data-action': 'grid', 'aria-label': t.viewer.showAll }, icons.grid),
+      h('button', { type: 'button', class: 'icon-btn', 'data-action': 'present', 'aria-label': t.viewer.exitFullscreen }, icons.shrink),
     );
 
     this.progress = h('div', { class: 'v-progress', 'aria-hidden': 'true' }, '<span></span>');
 
-    this.grid = h('div', { class: 'v-grid', 'data-cursor': '', role: 'dialog', 'aria-label': 'Todos os slides' });
+    this.grid = h('div', { class: 'v-grid', 'data-cursor': '', role: 'dialog', 'aria-label': t.viewer.allSlides });
     this.grid.hidden = true;
     const gridHead = h('div', { class: 'v-grid-head' });
     const gridTitle = h('p', { class: 'v-grid-title' });
-    gridTitle.innerHTML = `<em>${total}</em> slides`;
-    gridHead.append(gridTitle, h('button', { type: 'button', class: 'icon-btn', 'data-action': 'grid', 'aria-label': 'Fechar grade' }, icons.close));
+    gridTitle.innerHTML = t.viewer.slideCount(total);
+    gridHead.append(gridTitle, h('button', { type: 'button', class: 'icon-btn', 'data-action': 'grid', 'aria-label': t.viewer.closeGrid }, icons.close));
     this.grid.append(gridHead, h('div', { class: 'v-grid-body' }));
 
     host.append(bar, this.stage, this.strip, hud, this.progress, this.grid);
@@ -213,7 +214,7 @@ export class Viewer {
       console.error(error);
       if (token !== this.renderToken) return;
       const broken = h('div', { class: 'v-broken' });
-      broken.textContent = 'Não foi possível desenhar este slide.';
+      broken.textContent = t.viewer.broken;
       el = broken;
     }
     if (token !== this.renderToken) return;

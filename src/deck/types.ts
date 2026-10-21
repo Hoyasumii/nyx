@@ -1,3 +1,5 @@
+import type { UnsupportedReason } from '../i18n/messages';
+
 /**
  * A deck is a format-agnostic list of slides. Each loader (PDF, PPTX)
  * produces one, and the viewer only ever talks to this interface.
@@ -21,4 +23,9 @@ export interface Slide {
   render(displayWidth: number): Promise<HTMLElement>;
 }
 
-export class UnsupportedFileError extends Error {}
+/** A file the loaders can't present; `reason` picks the message shown to the user. */
+export class UnsupportedFileError extends Error {
+  constructor(readonly reason: UnsupportedReason) {
+    super(reason);
+  }
+}

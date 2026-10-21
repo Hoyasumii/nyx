@@ -23,10 +23,10 @@ export async function loadDeck(file: File): Promise<Deck> {
   }
   if (kind === 'zip') {
     if (/\.(ppt|key|odp)$/i.test(file.name)) {
-      throw new UnsupportedFileError('Esse formato ainda não é suportado. Exporte como PDF ou PPTX.');
+      throw new UnsupportedFileError('unsupportedFormat');
     }
     const { loadPptx } = await import('./pptx');
     return loadPptx(data, title);
   }
-  throw new UnsupportedFileError('Envie um arquivo PDF ou PPTX.');
+  throw new UnsupportedFileError('notPdfOrPptx');
 }
