@@ -11,11 +11,40 @@ const publicDir = path.join(root, 'public');
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined });
 const page = await browser.newPage({ deviceScaleFactor: 1 });
 
-// Open Graph / Twitter card.
+// Open Graph / Twitter card, one per locale. The file names match `ogImage`
+// in src/i18n/locales.ts; og.html holds the Portuguese copy by default.
+const ogCards = [
+  {
+    file: 'og.png',
+    lang: 'pt-BR',
+    copy: {
+      title: 'Seus slides,<br /><em>em cena.</em>',
+      meta: '<span>PDF · PPTX <b>→</b> tela cheia</span><span>· sem upload</span>',
+      kicker: 'Q3 · RESULTADOS',
+      slide: 'Crescimento por região',
+    },
+  },
+  {
+    file: 'og-en.png',
+    lang: 'en',
+    copy: {
+      title: 'Your slides,<br /><em>on stage.</em>',
+      meta: '<span>PDF · PPTX <b>→</b> fullscreen</span><span>· no upload</span>',
+      kicker: 'Q3 · RESULTS',
+      slide: 'Growth by region',
+    },
+  },
+];
 await page.setViewportSize({ width: 1200, height: 630 });
-await page.goto(pathToFileURL(path.join(root, 'scripts/og/og.html')).href);
-await page.evaluate(() => document.fonts.ready);
-await page.screenshot({ path: path.join(publicDir, 'og.png') });
+for (const { file, lang, copy } of ogCards) {
+  await page.goto(pathToFileURL(path.join(root, 'scripts/og/og.html')).href);
+  await page.evaluate(({ lang, copy }) => {
+    document.documentElement.lang = lang;
+    for (const [key, html] of Object.entries(copy)) document.querySelector(`[data-og="${key}"]`).innerHTML = html;
+  }, { lang, copy });
+  await page.evaluate(() => document.fonts.ready);
+  await page.screenshot({ path: path.join(publicDir, file) });
+}
 
 // Square icons: the favicon mark on a full-bleed background, with breathing
 // room so platforms that mask icons into circles don't clip the crescent.
@@ -49,7 +78,7 @@ for (const size of [16, 32, 48]) {
 await writeFile(path.join(publicDir, 'favicon.ico'), toIco(frames));
 
 await browser.close();
-console.log('Rendered og.png and icons into public/.');
+console.log('Rendered the Open Graph cards and icons into public/.');
 
 function toIco(frames) {
   const header = Buffer.alloc(6);

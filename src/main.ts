@@ -9,6 +9,7 @@ import './styles/pptx.css';
 
 import { loadDeck } from './deck/load';
 import { UnsupportedFileError } from './deck/types';
+import { t } from './i18n';
 import { Spotlight } from './ui/spotlight';
 import type { Viewer } from './ui/viewer';
 
@@ -62,9 +63,7 @@ async function open(file: File): Promise<void> {
   } catch (error) {
     console.error(error);
     showError(
-      error instanceof UnsupportedFileError
-        ? error.message
-        : 'Não conseguimos ler esse arquivo. Ele pode estar corrompido ou protegido por senha.',
+      error instanceof UnsupportedFileError ? t.errors[error.reason] : t.errors.unreadable,
     );
   } finally {
     busy = false;

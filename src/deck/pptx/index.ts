@@ -23,7 +23,7 @@ function colorMapOf(el: Element | null): Record<string, string> | null {
 export async function loadPptx(data: ArrayBuffer, title: string): Promise<Deck> {
   const pkg = await PptxPackage.open(data);
   const presentation = await pkg.part('ppt/presentation.xml');
-  if (!presentation) throw new UnsupportedFileError('Este arquivo não parece ser uma apresentação PowerPoint válida.');
+  if (!presentation) throw new UnsupportedFileError('invalidPptx');
 
   const root = presentation.doc.documentElement;
   const sldSz = child(root, 'sldSz');
@@ -88,7 +88,7 @@ export async function loadPptx(data: ArrayBuffer, title: string): Promise<Deck> 
     });
   }
 
-  if (!slides.length) throw new UnsupportedFileError('Não encontramos nenhum slide visível neste arquivo.');
+  if (!slides.length) throw new UnsupportedFileError('noSlides');
 
   return { title, kind: 'pptx', slides, dispose: () => pkg.dispose() };
 }
