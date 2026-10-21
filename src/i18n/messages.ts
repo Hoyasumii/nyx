@@ -38,6 +38,13 @@ export interface Messages {
     space: string;
   };
   faq: { id: string; title: string; items: { question: string; answer: string }[] };
+  sponsor: {
+    region: string;
+    adLabel: string;
+    supportLabel: string;
+    supportText: string;
+    supportCta: string;
+  };
   footer: { tagline: string; source: string };
   errors: Record<UnsupportedReason | 'unreadable', string>;
   viewer: {

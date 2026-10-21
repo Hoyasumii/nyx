@@ -26,6 +26,13 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+        env:
+          # Set under Settings → Secrets and variables → Actions → Variables.
+          VITE_ADS_PROVIDER: ${{ vars.VITE_ADS_PROVIDER }}
+          VITE_ETHICALADS_PUBLISHER: ${{ vars.VITE_ETHICALADS_PUBLISHER }}
+          VITE_CARBON_SERVE: ${{ vars.VITE_CARBON_SERVE }}
+          VITE_CARBON_PLACEMENT: ${{ vars.VITE_CARBON_PLACEMENT }}
+          VITE_SUPPORT_URL: ${{ vars.VITE_SUPPORT_URL }}
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist

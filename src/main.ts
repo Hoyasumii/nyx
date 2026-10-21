@@ -11,6 +11,7 @@ import { loadDeck } from './deck/load';
 import { UnsupportedFileError } from './deck/types';
 import { t } from './i18n';
 import { bindLanguageSwitch } from './ui/lang-switch';
+import { mountSponsor } from './ui/sponsor';
 import { Spotlight } from './ui/spotlight';
 import type { Viewer } from './ui/viewer';
 
@@ -128,3 +129,4 @@ window.addEventListener('drop', (event) => {
 
 setState('idle');
 bindLanguageSwitch(document.getElementById('lang-switch')!);
+mountSponsor(document.getElementById('sponsor')!);

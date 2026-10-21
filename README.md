@@ -48,6 +48,22 @@ Use `{{ key.path }}` for escaped text and `{{{ key.path }}}` for HTML. In the br
 To add a language: create the dictionary, register it in `locales.ts`, add its card to
 `scripts/render-assets.mjs` and its URL to `public/sitemap.xml`.
 
+### Sponsor card
+
+The landing page can show a small, non-blocking sponsor card under the drop zone (`src/ui/sponsor.ts`).
+It never appears in the viewer, loads only after the page is idle, and the ad network never sees the opened file.
+It is configured with build-time variables, in `.env` locally and as repository **variables**
+(Settings → Secrets and variables → Actions → Variables) for the deploy workflow:
+
+| Variable | Purpose |
+| --- | --- |
+| `VITE_ADS_PROVIDER` | `ethicalads`, `carbon`, or empty for no ads |
+| `VITE_ETHICALADS_PUBLISHER` | EthicalAds publisher id |
+| `VITE_CARBON_SERVE` / `VITE_CARBON_PLACEMENT` | Carbon Ads `serve` code and placement |
+| `VITE_SUPPORT_URL` | `https://` donation page shown when no ad is configured or served |
+
+With none of them set, nothing is shown.
+
 ### OpenGraph image and icons
 
 `public/og.png` (Portuguese), `public/og-en.png` (English) and the PNG icons are generated from

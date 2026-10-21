@@ -407,6 +407,118 @@
   color: var(--danger);
 }
 
+/* --- Sponsor ---------------------------------------------------------------------- */
+
+/* A quiet card under the drop zone; src/ui/sponsor.ts reveals it once filled. */
+.sponsor {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+  animation: sponsor-in 420ms var(--ease-out);
+}
+
+@keyframes sponsor-in {
+  from { opacity: 0; transform: translateY(6px); }
+}
+
+.sponsor-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-faint);
+}
+
+.sponsor-slot {
+  font-size: 14px;
+  color: var(--paper-dim);
+}
+
+.sponsor-slot a {
+  color: inherit;
+}
+
+.sponsor-support {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  text-decoration: none;
+  transition: border-color 160ms, color 160ms;
+}
+
+.sponsor-support:hover {
+  border-color: var(--line-strong);
+  color: var(--paper);
+}
+
+.sponsor-cta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--lume);
+  white-space: nowrap;
+}
+
+.sponsor-cta::after {
+  content: ' →';
+}
+
+/* EthicalAds brings its own styles; only its outer spacing is reset here. */
+.sponsor [data-ea-publisher] {
+  margin: 0;
+}
+
+/* Carbon ships unstyled markup, laid out here as a compact row. */
+#carbonads {
+  display: flex;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+#carbonads > span {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+#carbonads .carbon-img img {
+  width: 130px;
+  height: auto;
+  border-radius: 6px;
+}
+
+#carbonads .carbon-text {
+  line-height: 1.45;
+  text-decoration: none;
+}
+
+#carbonads .carbon-poweredby {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--paper-faint);
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sponsor {
+    animation: none;
+  }
+}
+
 /* --- Sections ---------------------------------------------------------------------- */
 
 .how,

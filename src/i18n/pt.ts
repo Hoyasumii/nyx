@@ -68,7 +68,7 @@ export const pt: Messages = {
       {
         question: 'Meu arquivo é enviado para algum servidor?',
         answer:
-          'Não. O Nyx é um site estático: o PDF ou PPTX é lido inteiramente pelo seu navegador e nenhum byte sai do seu computador. Você pode até desconectar a internet depois que a página carregar.',
+          'Não. O Nyx é um site estático: o PDF ou PPTX é lido inteiramente pelo seu navegador e nenhum byte sai do seu computador. Você pode até desconectar a internet depois que a página carregar. A página inicial pode mostrar um anúncio discreto de um parceiro sem rastreamento, que nunca tem acesso ao seu arquivo.',
       },
       {
         question: 'Quais formatos são aceitos?',
@@ -85,6 +85,13 @@ export const pt: Messages = {
         answer: 'Sim. Deslize para os lados para trocar de slide. O holofote aparece só com mouse, já que no toque não existe cursor.',
       },
     ],
+  },
+  sponsor: {
+    region: 'Patrocínio',
+    adLabel: 'Patrocinado',
+    supportLabel: 'Apoie o Nyx',
+    supportText: 'O Nyx é gratuito, sem cadastro e sem rastreamento.',
+    supportCta: 'Apoiar o projeto',
   },
   footer: {
     tagline: 'Feito para quem apresenta.',

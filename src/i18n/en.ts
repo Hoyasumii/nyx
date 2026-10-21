@@ -68,7 +68,7 @@ export const en: Messages = {
       {
         question: 'Is my file uploaded to a server?',
         answer:
-          'No. Nyx is a static site: the PDF or PPTX is read entirely by your browser and not a single byte leaves your computer. You can even go offline once the page has loaded.',
+          'No. Nyx is a static site: the PDF or PPTX is read entirely by your browser and not a single byte leaves your computer. You can even go offline once the page has loaded. The home page may show a small ad from a tracking-free partner, which never has access to your file.',
       },
       {
         question: 'Which formats are supported?',
@@ -85,6 +85,13 @@ export const en: Messages = {
         answer: 'Yes. Swipe sideways to change slides. The spotlight only shows up with a mouse, since touch has no cursor.',
       },
     ],
+  },
+  sponsor: {
+    region: 'Sponsor',
+    adLabel: 'Sponsored',
+    supportLabel: 'Support Nyx',
+    supportText: 'Nyx is free, with no sign-up and no tracking.',
+    supportCta: 'Support the project',
   },
   footer: {
     tagline: 'Made for people who present.',
