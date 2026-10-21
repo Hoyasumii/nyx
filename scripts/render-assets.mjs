@@ -22,29 +22,32 @@ await page.screenshot({ path: path.join(publicDir, 'og.png') });
 const mark = await readFile(path.join(publicDir, 'logo.svg'), 'utf8');
 const favicon = await readFile(path.join(publicDir, 'favicon.svg'), 'utf8');
 const icons = [
-  { file: 'favicon-32.png', size: 32, rounded: true },
-  { file: 'apple-touch-icon.png', size: 180, rounded: false },
-  { file: 'icon-192.png', size: 192, rounded: false },
-  { file: 'icon-512.png', size: 512, rounded: false },
+  { file: 'apple-touch-icon.png', size: 180 },
+  { file: 'icon-192.png', size: 192 },
+  { file: 'icon-512.png', size: 512 },
 ];
-for (const { file, size, rounded } of icons) {
+for (const { file, size } of icons) {
   await page.setViewportSize({ width: size, height: size });
-  const inset = rounded ? 0 : Math.round(size * 0.14);
+  const inset = Math.round(size * 0.14);
   await page.setContent(`<!doctype html><body style="margin:0;background:transparent">
-    <div style="width:${size}px;height:${size}px;background:#0d0c0b;border-radius:${rounded ? size * 0.23 : 0}px;display:grid;place-items:center">
+    <div style="width:${size}px;height:${size}px;background:#0d0c0b;display:grid;place-items:center">
       <div style="width:${size - inset * 2}px;height:${size - inset * 2}px">${mark.replace('<svg ', '<svg width="100%" height="100%" ')}</div>
     </div></body>`);
   await page.screenshot({ path: path.join(publicDir, file), omitBackground: true });
 }
 
-// favicon.ico for browsers that skip the SVG icon (Safari among them): an ICO
-// container holding PNG frames, which every current browser reads.
+// Tab icons: the bare crescent on a transparent background. Safari outlines
+// dark square favicons, so the tab icons skip the tile the app icons use.
+// favicon.ico is for browsers that skip the SVG icon: an ICO container holding
+// PNG frames, which every current browser reads.
 const frames = [];
 for (const size of [16, 32, 48]) {
   await page.setViewportSize({ width: size, height: size });
   await page.setContent(`<!doctype html><body style="margin:0;background:transparent">
     <div style="width:${size}px;height:${size}px">${favicon.replace('<svg ', '<svg width="100%" height="100%" ')}</div></body>`);
-  frames.push({ size, png: await page.screenshot({ omitBackground: true }) });
+  const png = await page.screenshot({ omitBackground: true });
+  if (size === 32) await writeFile(path.join(publicDir, 'favicon-32.png'), png);
+  frames.push({ size, png });
 }
 await writeFile(path.join(publicDir, 'favicon.ico'), toIco(frames));
 
